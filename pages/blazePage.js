@@ -4,13 +4,15 @@ class blazePage {
     //use direct function without get keyword.
     //one way to get multipl elements
     //get the parent
-    get parent(){
-        return $('ul.list-nav-links')
-    }
+    parent  = $('ul.list-nav-links');
+    // get parent(){
+    //     return $('ul.list-nav-links')
+    // }
     //using parent get the children
-    get childElements(){
-        return this.parent.$$('li');
-    }
+    childElements = this.parent.$$('li');
+    // get childElements(){
+    //     return this.parent.$$('li');
+    // }
     //method to get the text for desired element from elements
     get getTextForLis(){
         return this.childElements.filter(element => {
@@ -18,10 +20,11 @@ class blazePage {
         });
     }
 
-    //direct method to get findelements 
-    get liElements(){
-        return $$("#main-nav > ul > li:nth-child(1)")
-    }
+    //direct method to get findelements
+    liElements = $$("#main-nav > ul > li:nth-child(1)");
+    // get liElements(){
+    //     return $$("#main-nav > ul > li:nth-child(1)")
+    // }
 
     get getTextForLiElements(){
         return this.liElements.filter(element => {
