@@ -1,8 +1,10 @@
 class wdioPageLocators {
-    constructor() {
-        this.searchBox = () => $('#search_input_react');
-        this.contributeBtn = () => $('nav > ul > li:nth-child(6) > a');
-    }
+  get searchBox() {
+    return $(".DocSearch-Button-Placeholder");
+  }
+  get contributeBtn() {
+    return $(".navbar__items a:nth-child(6)");
+  }
 }
 
-module.exports = new wdioPageLocators();
+export default new wdioPageLocators();
