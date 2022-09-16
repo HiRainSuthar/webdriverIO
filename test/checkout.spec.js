@@ -1,24 +1,34 @@
 import LoginPage from "../pages/loginpage";
+import InventoryPage from "../pages/inventorypage";
+import CartPage from "../pages/cartpage";
+import CheckoutYourInfoPage from "../pages/checkoutyourinfopage";
+import CheckoutOverviewPage from "../pages/checkouoverviewpage";
+import CheckoutCompletePage from "../pages/chekcoutcompletepage";
 
 describe("checkout flow validation", async () => {
-  it("checkout product", async () => {
-    await browser.url('https://www.saucedemo.com/')
-    await LoginPage.login('standard_user', 'secret_sauce');
-    expect(await browser.getUrl()).toContain('inventory');
-    let productsHeaders = await $$('.inventory_item');
-    console.log('products found '+ productsHeaders.length);
-
-    productsHeaders.forEach(async function(product){
-        const productText = await product.$('.inventory_item_name').getText();
-        console.log('Products are '+productText)
-        if(productText === "Sauce Labs Backpack"){
-            await product.$('.pricebar button').click();
-            browser.pause(10000);
-        }
-    })
-    await $('#shopping_cart_container').click();
-    expect(await $('.cart_item').isExisting()).toBe(true)
-    // let desiredProduct = products.filter(product async() => await product.$('.inventory_item_name').getText() == ('Sauce Labs Backpack'))
-    // await desiredProduct.$('#add-to-cart-sauce-labs-backpack').click();
+  it("Successful checkout", async () => {
+    await browser.url("https://www.saucedemo.com/");
+    await LoginPage.login("standard_user", "secret_sauce");
+    expect(browser).toHaveTextContaining("inventory");
+    await InventoryPage.addProductoToCart("Sauce Labs Backpack");
+    expect(browser).toHaveUrlContaining("cart");
+    expect(await CartPage.productName.getText()).toHaveText(
+      "Sauce Labs Backpack"
+    );
+    await CartPage.checkoutBtn.click();
+    expect(browser).toHaveUrlContaining("checkout-step-one");
+    await CheckoutYourInfoPage.fillupInformation(
+      "testname",
+      "testlastname",
+      "356488"
+    );
+    expect(browser).toHaveUrlContaining("checkout-step-two");
+    expect(await CheckoutOverviewPage.orderTotal.getText()).toHaveText(
+      "$32.39"
+    );
+    await CheckoutOverviewPage.finishBtn.click();
+    expect(
+      await CheckoutCompletePage.checkoutCompleteMessage.getText()
+    ).toHaveText("THANK YOU FOR YOUR ORDER");
   });
 });

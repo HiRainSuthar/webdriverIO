@@ -18,13 +18,13 @@ describe('Login to saucelabs', function(){
     ]
 
     credentials.forEach(function(credential){
-        it('Successful login with valid credentials', async function(){
+        it('Login tests', async function(){
             await LoginPage.login(credential.username, credential.password);
             if((await browser.getUrl()).includes('inventory')){
-                expect(await browser.getUrl()).toContain('inventory');
+                expect(browser).toHaveUrlContaining('inventory');
             }
             else {
-                expect(await LoginPage.errorMessage.getText()).toEqual('Epic sadface: Sorry, this user has been locked out.')
+                expect(await LoginPage.errorMessage.getText()).toHaveText('Epic sadface: Sorry, this user has been locked out.')
             }
         }) 
     })

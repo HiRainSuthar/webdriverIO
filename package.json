@@ -7,7 +7,7 @@
         "test": "test"
     },
     "scripts": {
-        "test": "wdio wdio.conf.js --spec=test/checkout.spec.js",
+        "test": "wdio wdio.conf.js",
         "allure": "allure generate allure-results --clean && allure open"
     },
     "repository": {
