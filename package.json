@@ -8,7 +8,8 @@
     },
     "scripts": {
         "test": "wdio wdio.conf.js",
-        "allure": "allure generate allure-results --clean && allure open"
+        "allure": "allure generate allure-results --clean && allure open",
+        "lint": "eslint ./src"
     },
     "repository": {
         "type": "git",
@@ -30,6 +31,11 @@
         "@wdio/mocha-framework": "^7.23.0",
         "@wdio/spec-reporter": "^7.23.0",
         "chromedriver": "^104.0.0",
+        "eslint": "^8.23.1",
+        "eslint-config-standard": "^17.0.0",
+        "eslint-plugin-import": "^2.26.0",
+        "eslint-plugin-n": "^15.2.5",
+        "eslint-plugin-promise": "^6.0.1",
         "wdio-chromedriver-service": "^7.3.2"
     },
     "dependencies": {
