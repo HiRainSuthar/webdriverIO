@@ -4,31 +4,30 @@ import CartPage from "../pages/cartpage";
 import CheckoutYourInfoPage from "../pages/checkoutyourinfopage";
 import CheckoutOverviewPage from "../pages/checkouoverviewpage";
 import CheckoutCompletePage from "../pages/chekcoutcompletepage";
+import testdata from '../testdata/testdata.js';
 
 describe("checkout flow validation", async () => {
   it("Successful checkout", async () => {
     await browser.url("https://www.saucedemo.com/");
-    await LoginPage.login("standard_user", "secret_sauce");
+    await LoginPage.login(testdata.username, testdata.password);
     expect(browser).toHaveTextContaining("inventory");
-    await InventoryPage.addProductoToCart("Sauce Labs Backpack");
+    await InventoryPage.addProductoToCart(testdata.productToCheckout);
     expect(browser).toHaveUrlContaining("cart");
-    expect(await CartPage.productName.getText()).toHaveText(
-      "Sauce Labs Backpack"
-    );
+    expect(await CartPage.productName.getText()).toHaveText(testdata.productToCheckout);
     await CartPage.checkoutBtn.click();
     expect(browser).toHaveUrlContaining("checkout-step-one");
     await CheckoutYourInfoPage.fillupInformation(
-      "testname",
-      "testlastname",
-      "356488"
+      testdata.firstname,
+      testdata.lastname,
+      testdata.zipcode
     );
     expect(browser).toHaveUrlContaining("checkout-step-two");
     expect(await CheckoutOverviewPage.orderTotal.getText()).toHaveText(
-      "$32.39"
+      testdata.ordertotal
     );
     await CheckoutOverviewPage.finishBtn.click();
     expect(
       await CheckoutCompletePage.checkoutCompleteMessage.getText()
-    ).toHaveText("THANK YOU FOR YOUR ORDER");
+    ).toHaveText(testdata.checkoutcompletemessage);
   });
 });
