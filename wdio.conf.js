@@ -1,4 +1,5 @@
 import deleteFiles from './util/generalmethods'
+const { TimelineService } = require('wdio-timeline-reporter/timeline-service')
 
 exports.config = {
   //
@@ -69,7 +70,7 @@ exports.config = {
   // Define all options that are relevant for the WebdriverIO instance here
   //
   // Level of logging verbosity: trace | debug | info | warn | error | silent
-  logLevel: 'silent',
+  logLevel: 'info',
   //
   // Set specific log levels per logger
   // loggers:
@@ -109,7 +110,7 @@ exports.config = {
   // Services take over a specific job you don't want to take care of. They enhance
   // your test setup with almost no effort. Unlike plugins, they don't add new
   // commands. Instead, they hook themselves up into the test process.
-  services: ['chromedriver'],
+  services: ['chromedriver', [TimelineService]],
 
   // Framework you want to run your specs with.
   // The following are supported: Mocha, Jasmine, and Cucumber
@@ -140,7 +141,9 @@ exports.config = {
         disableWebdriverStepsReporting: true,
         disableWebdriverScreenshotsReporting: true
       }
-    ]
+    ][
+      'timeline',
+      { outputDir: './reports' }]
   ],
 
   //
